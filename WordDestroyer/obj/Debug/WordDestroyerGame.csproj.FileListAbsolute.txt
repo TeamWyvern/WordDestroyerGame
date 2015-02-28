@@ -1,0 +1,6 @@
+C:\Users\User\Desktop\WordDestroyerGame\WordDestroyer\bin\Debug\Brickdestroyer.exe.config
+C:\Users\User\Desktop\WordDestroyerGame\WordDestroyer\bin\Debug\Brickdestroyer.exe
+C:\Users\User\Desktop\WordDestroyerGame\WordDestroyer\bin\Debug\Brickdestroyer.pdb
+C:\Users\User\Desktop\WordDestroyerGame\WordDestroyer\obj\Debug\WordDestroyerGame.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\WordDestroyerGame\WordDestroyer\obj\Debug\Brickdestroyer.exe
+C:\Users\User\Desktop\WordDestroyerGame\WordDestroyer\obj\Debug\Brickdestroyer.pdb
