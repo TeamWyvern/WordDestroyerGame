@@ -8,8 +8,11 @@ namespace WordDestroyerGame
     using System.Text;
     using System.Threading.Tasks;
     using System.Speech.Synthesis;
+    using System.Diagnostics;
+    using System.Threading;
 
-    public class MainMenu : IDrawableObject 
+    
+    public class MainMenu : IDrawableObject //I have no idea how to work with interfaces. Need help with this
     {
         public readonly char optionSelector = '@';
         public readonly string NewGameOption = "New Game";
@@ -18,12 +21,20 @@ namespace WordDestroyerGame
         public readonly string AboutOption = "About";
         public readonly string ExitOption = "Exit";
         public readonly string ReturnOption = "Return";
+        private int selectedMainMenuLine = new int();
+        private bool newGameStarted;
+
+        public bool NewGameStarted
+        {
+            get { return newGameStarted; }
+            set { newGameStarted = value; }
+        }
 
         public List<string> UserMenuList = new List<string>() { "New Game", "Hall of Fame", "Instructions", "About", "Exit" };
         public Stopwatch AnimationStopwatch = new Stopwatch();
         SpeechSynthesizer natashaVolkova = new SpeechSynthesizer();     //Not necessary, but cool. Natasha Volkova --> RA3 Sniper. Synth needs new name
 
-        public bool NewGameStarted { get; set; }
+        
 
         public void InteractionLoop()
         {
@@ -34,23 +45,39 @@ namespace WordDestroyerGame
             // user hits "Enter" then we should read the instructions from "Instructions.txt" file and draw them on the Console. 
             // Don't forget to add "Return" option in order the user to turn back into the main menu.
 
-            ConsoleKeyInfo inputWaiter;         //Needs a better name
+            ConsoleKeyInfo userInputKey;
 
-            do      //Placeholder code. Needs to be finished
+            do      
             {
-                inputWaiter = Console.ReadKey(true); //Does not show the key 
+                if (this.newGameStarted == true)
+                {
+                    break;
+                }
+                userInputKey = Console.ReadKey(true); //Does not show the key 
 
-                switch (inputWaiter.Key)        //Needs finishing
+                switch (userInputKey.Key)        
                 {
                     case ConsoleKey.DownArrow:  //Which keys will we be waiting for?
                         Console.Clear();
-                        DrawHallOfFameOption(); //Example code
+                        if (selectedMainMenuLine == UserMenuList.Count-1)
+                        {
+                            selectedMainMenuLine = -1;
+                        }
+                        selectedMainMenuLine += 1;
+                        DrawMainMenu(selectedMainMenuLine);
                         break;
                     case ConsoleKey.UpArrow:
                         Console.Clear();
+                        if (selectedMainMenuLine == 0)
+                        {
+                            selectedMainMenuLine = UserMenuList.Count;
+                        }
+                        selectedMainMenuLine -= 1;
+                        DrawMainMenu(selectedMainMenuLine);
                         break;
                     case ConsoleKey.Enter:
                         Console.Clear();
+                        DrawSubMenu();
                         break;
                     case ConsoleKey.Backspace:
                         Console.Clear();
@@ -89,12 +116,14 @@ namespace WordDestroyerGame
                         Console.Clear();
                         break;
                     // etc..
+
                 }
-            } while (inputWaiter.Key != ConsoleKey.Escape);
+            } while (userInputKey.Key != ConsoleKey.Escape);
         }
 
         public void Draw()
         {   
+            AnimationStopwatch = new Stopwatch();
             // TODO: The name of the game should be drawn along with the main menu navigaiton options and selector.
             string startMessage = "Welcome to the game/Placeholder";    //Needs to be moved elsewhere so it is only executed once
             int y = Console.WindowHeight / 2;
@@ -105,26 +134,61 @@ namespace WordDestroyerGame
             {
                 AnimationStopwatch.Start();
                 //if (AnimationStopwatch.ElapsedMilliseconds == 100)  //Do not erase this line! Atleast not now
-                {
+                //{
                     Console.Write(startMessage[i]);
                     Console.Title += startMessage[i];
                     i++;
                     AnimationStopwatch.Reset();
-                }
+                    Thread.Sleep(50);
+                //}
             }
             AnimationStopwatch.Start();
 
             //natashaVolkova.Speak("Welcome to Word Destroyer, a game created by team wyvern");  //Rough synth. Needs edits
 
-            while (true)    //Placeholder method of measuring time used. Needs replacement or improvement
+            //The logic below is in the method DrawMainMenu(). If you need animation.stopwatch you can add it there.
+            //while (true)    //Placeholder method of measuring time used. Needs replacement or improvement
+            //{
+            //    //if (AnimationStopwatch.ElapsedMilliseconds > 1500)    //Disabled for programming purposes. Gotta be re-enabled
+            //    {
+            //        Console.Clear();
+            //        Console.SetCursorPosition(Console.WindowWidth / 2 - 8, y);    //Placeholder calculations need to be imroved to dynamically scale  (Written in 1680x1050)
+            //        Console.Write(string.Join("\n" + new string(' ', Console.WindowWidth / 2 - 8), UserMenuList));    //WriteLine switched to string.Join for easy maintenance and modification
+            //        break;
+            //    }
+            //}
+            DrawMainMenu(selectedMainMenuLine);
+        }
+        private void DrawMainMenu(int selectedMainMenuLine)
+        {
+            Console.Clear();
+            
+            for (int i = 0; i < UserMenuList.Count; i++)
             {
-                //if (AnimationStopwatch.ElapsedMilliseconds > 1500)    //Disabled for programming purposes. Gotta be re-enabled
+                Console.SetCursorPosition(Console.WindowWidth / 2 - 8, Console.WindowHeight / 2 + i);
+                if (i==selectedMainMenuLine)
                 {
-                    Console.Clear();
-                    Console.SetCursorPosition(Console.WindowWidth / 2 - 8, y);    //Placeholder calculations need to be imroved to dynamically scale  (Written in 1680x1050)
-                    Console.Write(string.Join("\n" + new string(' ', Console.WindowWidth / 2 - 8), UserMenuList));    //WriteLine switched to string.Join for easy maintenance and modification
-                    break;
+                    Console.Write("@");
                 }
+                Console.Write(UserMenuList[i]);
+            }
+        }
+        private void DrawSubMenu()
+        {
+            switch (selectedMainMenuLine)
+            {
+                case 0: this.newGameStarted = true;
+                    break;
+                case 1: DrawHallOfFameOption();
+                    break;
+                case 2: DrawInstructionsOption();
+                    break;
+                case 3: DrawAboutOption();
+                    break;
+                case 4: Console.Clear();
+                    Console.WriteLine("GoodBye!");
+                    System.Environment.Exit(1);
+                    break;
             }
         }
 

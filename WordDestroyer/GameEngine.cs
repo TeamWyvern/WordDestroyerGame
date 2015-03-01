@@ -35,6 +35,7 @@
 
                 if (mainMenu.NewGameStarted == true)
                 {
+                    throw new NotImplementedException();
                     // TODO: The game field plus the runtime menu should be drawn and the game should start.
                 }
             }
