@@ -9,7 +9,7 @@ namespace WordDestroyerGame
     using System.Threading.Tasks;
     using System.Speech.Synthesis;
 
-    public class MainMenu : IDrawableObject //I have no idea how to work with interfaces. Need help with this
+    public class MainMenu : IDrawableObject 
     {
         public readonly char optionSelector = '@';
         public readonly string NewGameOption = "New Game";
