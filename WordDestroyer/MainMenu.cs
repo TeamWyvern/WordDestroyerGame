@@ -42,7 +42,7 @@
                 Console.WriteLine(fileContents);
 
             }
-            // TODO: This method will be called when HallOfFame option is selected and "Enter" key is pressed.
+ 
         }
 
         private void DrawInstructionsOption()
@@ -53,8 +53,7 @@
                 Console.WriteLine(fileContents);
                
             }
-            // TODO: This method will be called when Instructions option is selected and "Enter" key is pressed.
-
+          
         }
 
         private void DrawAboutOption()
@@ -65,7 +64,7 @@
                 Console.WriteLine(fileContents);
 
             }
-            // TODO: This method will be called when About option is selected and "Enter" key is pressed.
+            
         }
 
         public void Draw(Point point)
