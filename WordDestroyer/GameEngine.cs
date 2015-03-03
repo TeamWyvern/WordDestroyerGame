@@ -30,7 +30,8 @@
         public void StartGame()
         {
             MainMenu mainMenu = new MainMenu();
-
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             while (true)
             {
                 mainMenu.Draw();
@@ -52,7 +53,7 @@
             Console.SetWindowSize(45, 45);
             Console.SetBufferSize(45, 45);
             Console.Write(string.Empty);
-            
+
         }
 
         private void StartNewGame()
@@ -60,7 +61,7 @@
             Console.Clear();
             ReadAllWords();
 
-       
+
             Thread thread = new Thread(() => this.DrawWords());
             thread.Start();
 
@@ -85,6 +86,7 @@
                             this.SelectedWord.IsSelected = false;
                             this.SelectedWord.IsVisible = false;
                             this.SelectedWord.IsDestroyed = true;
+                            
                         }
                     }
                 }
@@ -106,7 +108,7 @@
         {
             for (int i = 97; i < 123; i++)
             {
-                this.wordsDictionary.Add(Convert.ToChar(i), new List<WordObject>());               
+                this.wordsDictionary.Add(Convert.ToChar(i), new List<WordObject>());
             }
         }
 
@@ -126,12 +128,12 @@
 
         private void DrawWords()
         {
+
             Stopwatch newGameStopwatch = new Stopwatch();
             newGameStopwatch.Start();
             int livesCount = 3;
-            int playFieldWidth = 20;
-            Random randomGen = new Random();
-
+            long scores = 0;
+            
             while (true)
             {
                 if (newGameStopwatch.ElapsedMilliseconds % 3000 < 500)
@@ -140,12 +142,14 @@
                     WordObject currentWord = wordsDictionary[randomLetter]
                         .Where(x => x.IsVisible == false && x.IsMissed == false && x.IsDestroyed == false)
                         .FirstOrDefault();
-                    
+
 
                     if (currentWord != null)
                     {
-                        currentWord.IsVisible = true;                        
+                        currentWord.IsVisible = true;
+
                     }
+
                 }
 
                 foreach (var currentWordCollection in wordsDictionary.ToArray())
@@ -156,12 +160,20 @@
                         {
                             Point currentPoint = word.Element.CoordinatePoint;
                             currentPoint.Y += 1;
-                            currentPoint.X = randomGen.Next(0, playFieldWidth);
+                            if (currentPoint.Y > 0 && currentPoint.Y < 2)
+                            {
+                                currentPoint.X = randomGenerator.Next(0, 25);
+                            }
                             word.Element.CoordinatePoint = currentPoint;
+                            if (currentPoint.Y == 45)
+                            {
+                                livesCount--;
+
+                            }
                         }
                     }
                 }
-
+      
                 Console.Clear();
 
                 foreach (var currentWordCollection in wordsDictionary.ToArray())
@@ -175,8 +187,16 @@
                         }
                     }
                 }
-                PrintStringOnPosition(30, 10, "Lives:" + livesCount, ConsoleColor.White);
-                PrintStringOnPosition(30, 11, "Points:" , ConsoleColor.White);
+
+                PrintStringOnPosition(30, 10, "Lives:" + livesCount, ConsoleColor.Green);
+                PrintStringOnPosition(30, 11, "Points:" + scores, ConsoleColor.Green);
+                if (livesCount == 0)
+                {
+                    PrintStringOnPosition(10, 10, "Game over", ConsoleColor.Red);
+                    PrintStringOnPosition(10, 11, "Press ENTER to exit", ConsoleColor.Red);
+                    Console.WriteLine();
+                    Environment.Exit(0);
+                }
 
                 Thread.Sleep(250);
                 this.visibleWords.Clear();
@@ -188,6 +208,7 @@
             Console.ForegroundColor = color;
             Console.Write(str);
         }
+
         private char GetRandomLetter()
         {
             if (!this.alphabetDictionary.ContainsValue(false))
@@ -218,7 +239,7 @@
                 {
                     if (wordsDictionary.ContainsKey(currentWord[0]))
                     {
-                        wordsDictionary[currentWord[0]].Add(new WordObject(currentWord, new Point(Console.WindowWidth / 2, 0)));                        
+                        wordsDictionary[currentWord[0]].Add(new WordObject(currentWord, new Point(Console.WindowWidth / 2, 0)));
                     }
                 }
             }
