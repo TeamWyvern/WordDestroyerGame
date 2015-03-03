@@ -26,6 +26,9 @@
         private List<WordObject> visibleWords = new List<WordObject>();
         private WordObject SelectedWord { get; set; }
         private bool IsWordSelected { get; set; }
+        private int LivesCount = 3;
+        private long Score = 0;
+        private int Coefficient = 0;
 
         public void StartGame()
         {
@@ -74,7 +77,7 @@
                     continue;
                 }
 
-                if (this.IsWordSelected && this.SelectedWord.IsVisible)
+                if (this.IsWordSelected)
                 {
                     if (this.SelectedWord.Element.Text[0] == key.KeyChar)
                     {
@@ -86,7 +89,8 @@
                             this.SelectedWord.IsSelected = false;
                             this.SelectedWord.IsVisible = false;
                             this.SelectedWord.IsDestroyed = true;
-                            
+                            this.Score += this.Coefficient * 10;
+                            this.Coefficient = 0;
                         }
                     }
                 }
@@ -96,6 +100,7 @@
 
                     if (this.SelectedWord != null)
                     {
+                        this.Coefficient = this.SelectedWord.Element.Text.Length;
                         this.IsWordSelected = true;
                         this.SelectedWord.IsSelected = true;
                         this.SelectedWord.Element.Text = this.SelectedWord.Element.Text.Remove(0, 1);
@@ -131,8 +136,6 @@
 
             Stopwatch newGameStopwatch = new Stopwatch();
             newGameStopwatch.Start();
-            int livesCount = 3;
-            long scores = 0;
             
             while (true)
             {
@@ -167,7 +170,7 @@
                             word.Element.CoordinatePoint = currentPoint;
                             if (currentPoint.Y == 45)
                             {
-                                livesCount--;
+                                this.LivesCount--;
 
                             }
                         }
@@ -188,9 +191,9 @@
                     }
                 }
 
-                PrintStringOnPosition(30, 10, "Lives:" + livesCount, ConsoleColor.Green);
-                PrintStringOnPosition(30, 11, "Points:" + scores, ConsoleColor.Green);
-                if (livesCount == 0)
+                PrintStringOnPosition(30, 10, "Lives: " + this.LivesCount, ConsoleColor.Green);
+                PrintStringOnPosition(30, 11, "Points: " + this.Score, ConsoleColor.Green);
+                if (this.LivesCount == 0)
                 {
                     PrintStringOnPosition(10, 10, "Game over", ConsoleColor.Red);
                     PrintStringOnPosition(10, 11, "Press ENTER to exit", ConsoleColor.Red);
@@ -198,7 +201,7 @@
                     Environment.Exit(0);
                 }
 
-                Thread.Sleep(250);
+                Thread.Sleep(350);
                 this.visibleWords.Clear();
             }
         }
@@ -221,7 +224,7 @@
             // If this letter has been used, recursively call this method again
             if (this.alphabetDictionary[randomChar] == true)
             {
-                GetRandomLetter();
+                randomChar = GetRandomLetter();
             }
 
             this.alphabetDictionary[randomChar] = true;
@@ -239,7 +242,7 @@
                 {
                     if (wordsDictionary.ContainsKey(currentWord[0]))
                     {
-                        wordsDictionary[currentWord[0]].Add(new WordObject(currentWord, new Point(Console.WindowWidth / 2, 0)));
+                        wordsDictionary[currentWord[0]].Add(new WordObject(currentWord.Trim(), new Point(Console.WindowWidth / 2, 0)));
                     }
                 }
             }
