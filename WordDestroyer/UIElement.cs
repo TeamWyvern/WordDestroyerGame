@@ -17,5 +17,12 @@
         public Point CoordinatePoint { get; set; }
         public string Text { get; set; }
         public char[][] DrawableObject { get; set; }
+
+        public void IncreaseY()
+        {
+            Point currentPoint = this.CoordinatePoint;
+            currentPoint.Y += 1;
+            this.CoordinatePoint = currentPoint;
+        }
     }
 }

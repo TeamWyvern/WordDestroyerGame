@@ -41,6 +41,15 @@
                 {
                     if (this.IsVisible && this.IsMissed == false && this.IsDestroyed == false)
                     {
+                        Console.SetCursorPosition(this.Element.CoordinatePoint.X, this.Element.CoordinatePoint.Y - 1);
+                        string empty = new string(' ', this.Element.Text.Length);
+                        Console.WriteLine(empty);
+
+                        if (this.Element.Text.Length == 1)
+                        {
+                            return;
+                        }
+
                         Console.SetCursorPosition(this.Element.CoordinatePoint.X, this.Element.CoordinatePoint.Y);
 
                         if (this.IsSelected)

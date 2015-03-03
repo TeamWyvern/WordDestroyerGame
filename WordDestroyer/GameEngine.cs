@@ -25,6 +25,7 @@
         private Dictionary<char, bool> alphabetDictionary = new Dictionary<char, bool>();
         private List<WordObject> visibleWords = new List<WordObject>();
         private WordObject SelectedWord { get; set; }
+        private int CurrentCharIndex { get; set; }
         private bool IsWordSelected { get; set; }
         private int LivesCount = 3;
         private long Score = 0;
@@ -64,6 +65,8 @@
             Console.Clear();
             ReadAllWords();
 
+            SpaceshipObject spaceship = new SpaceshipObject(new Point(12, 39));
+            spaceship.Draw();
 
             Thread thread = new Thread(() => this.DrawWords());
             thread.Start();
@@ -79,18 +82,23 @@
 
                 if (this.IsWordSelected)
                 {
-                    if (this.SelectedWord.Element.Text[0] == key.KeyChar)
+                    if (this.SelectedWord.Element.Text[this.CurrentCharIndex] == key.KeyChar)
                     {
-                        this.SelectedWord.Element.Text = this.SelectedWord.Element.Text.Remove(0, 1);
+                        char[] text = this.SelectedWord.Element.Text.ToCharArray();
+                        text[this.CurrentCharIndex] = ' ';
+                        this.SelectedWord.Element.Text = new string(text);
+                        this.CurrentCharIndex++;
 
-                        if (this.SelectedWord.Element.Text == string.Empty)
+                        if (this.CheckWordIsCompleted(this.SelectedWord.Element.Text))
                         {
+                            this.SelectedWord.Draw();
                             this.IsWordSelected = false;
                             this.SelectedWord.IsSelected = false;
                             this.SelectedWord.IsVisible = false;
                             this.SelectedWord.IsDestroyed = true;
                             this.Score += this.Coefficient * 10;
                             this.Coefficient = 0;
+                            this.CurrentCharIndex = 0;
                         }
                     }
                 }
@@ -103,7 +111,10 @@
                         this.Coefficient = this.SelectedWord.Element.Text.Length;
                         this.IsWordSelected = true;
                         this.SelectedWord.IsSelected = true;
-                        this.SelectedWord.Element.Text = this.SelectedWord.Element.Text.Remove(0, 1);
+                        char[] text = this.SelectedWord.Element.Text.ToCharArray();
+                        text[this.CurrentCharIndex] = ' ';
+                        this.SelectedWord.Element.Text = new string(text);
+                        this.CurrentCharIndex++;
                     }
                 }
             }
@@ -131,9 +142,21 @@
             this.FillAlphabetDictionary();
         }
 
+        private bool CheckWordIsCompleted(string text)
+        {
+            foreach (var item in text.ToCharArray())
+            {
+                if (item != ' ')
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private void DrawWords()
         {
-
             Stopwatch newGameStopwatch = new Stopwatch();
             newGameStopwatch.Start();
             
@@ -146,13 +169,10 @@
                         .Where(x => x.IsVisible == false && x.IsMissed == false && x.IsDestroyed == false)
                         .FirstOrDefault();
 
-
                     if (currentWord != null)
                     {
                         currentWord.IsVisible = true;
-
                     }
-
                 }
 
                 foreach (var currentWordCollection in wordsDictionary.ToArray())
@@ -177,7 +197,7 @@
                     }
                 }
       
-                Console.Clear();
+                //Console.Clear();
 
                 foreach (var currentWordCollection in wordsDictionary.ToArray())
                 {
