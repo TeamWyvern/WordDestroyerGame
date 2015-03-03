@@ -121,7 +121,7 @@ namespace WordDestroyerGame
             for (int i = 0; i < startMessage.Length; )
             {
                 AnimationStopwatch.Start();
-                //if (AnimationStopwatch.ElapsedMilliseconds == 100)  //Do not erase this line! Atleast not now
+                //if (AnimationStopwatch.ElapsedMilliseconds == 100) 
                 //{
                     Console.Write(startMessage[i]);
                     //Console.Title += startMessage[i];
