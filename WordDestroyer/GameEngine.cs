@@ -40,5 +40,10 @@
                 }
             }
         }
+
+        private void StartNewGame()
+        {
+
+        }
     }
 }

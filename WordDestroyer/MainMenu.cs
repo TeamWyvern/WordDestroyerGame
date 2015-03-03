@@ -185,37 +185,35 @@ namespace WordDestroyerGame
 
         private void DrawHallOfFameOption()
         {
-            using (StreamReader reader = new StreamReader("HallOfFame.txt"))
+            // TODO: This method will be called when HallOfFame option is selected and "Enter" key is pressed.
+            // Probably string.Join a list containing scores and a list containing name or maybe a dicitonary?
+
+            using (StreamReader reader = new StreamReader(@"..\..\Data\HallOfFame.txt"))
             {
                 string fileContents = reader.ReadToEnd();
                 Console.WriteLine(fileContents);
 
             } 
-            // TODO: This method will be called when HallOfFame option is selected and "Enter" key is pressed.
-            // Probably string.Join a list containing scores and a list containing name or maybe a dicitonary?
-
         }
 
         private void DrawInstructionsOption()
         {
-            using (StreamReader reader =  new StreamReader("Instructions.txt"))
+            using (StreamReader reader =  new StreamReader(@"..\..\Data\Instructions.txt"))
             {
                 string fileContents = reader.ReadToEnd();
                 Console.WriteLine(fileContents);
                
             }
-          
         }
 
         private void DrawAboutOption()
         {
-            using (StreamReader reader = new StreamReader("About.txt"))
+            using (StreamReader reader = new StreamReader(@"..\..\Data\About.txt"))
             {
                 string fileContents = reader.ReadToEnd();
                 Console.WriteLine(fileContents);
 
             }
-            
         }
     }
 }
