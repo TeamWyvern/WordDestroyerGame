@@ -17,7 +17,7 @@ namespace WordDestroyerGame
         private int selectedMainMenuLine = new int();
         private bool newGameStarted;
         public readonly char optionSelector = '@';
-        public List<string> UserMenuList = new List<string>() { "New Game", "Hall of Fame", "Instructions", "About", "Exit" };
+        public string[] UserMenuList = new string[] { "New Game", "Hall of Fame", "Instructions", "About", "Exit" };
         public Stopwatch AnimationStopwatch = new Stopwatch();
         SpeechSynthesizer natashaVolkova = new SpeechSynthesizer();     //Not necessary, but cool. Natasha Volkova --> RA3 Sniper. Synth needs new name
 
@@ -50,7 +50,7 @@ namespace WordDestroyerGame
                 {
                     case ConsoleKey.DownArrow:  //Which keys will we be waiting for?
                         Console.Clear();
-                        if (selectedMainMenuLine == UserMenuList.Count-1)
+                        if (selectedMainMenuLine == UserMenuList.Length-1)
                         {
                             selectedMainMenuLine = -1;
                         }
@@ -61,7 +61,7 @@ namespace WordDestroyerGame
                         Console.Clear();
                         if (selectedMainMenuLine == 0)
                         {
-                            selectedMainMenuLine = UserMenuList.Count;
+                            selectedMainMenuLine = UserMenuList.Length;
                         }
                         selectedMainMenuLine -= 1;
                         DrawMainMenu(selectedMainMenuLine);
@@ -153,7 +153,7 @@ namespace WordDestroyerGame
         {
             Console.Clear();
             
-            for (int i = 0; i < UserMenuList.Count; i++)
+            for (int i = 0; i < UserMenuList.Length; i++)
             {
                 Console.SetCursorPosition(Console.WindowWidth / 2 - 8, Console.WindowHeight / 2 + i);
                 if (i==selectedMainMenuLine)
@@ -187,31 +187,88 @@ namespace WordDestroyerGame
         {
             // TODO: This method will be called when HallOfFame option is selected and "Enter" key is pressed.
             // Probably string.Join a list containing scores and a list containing name or maybe a dicitonary?
-
-            using (StreamReader reader = new StreamReader(@"..\..\Data\HallOfFame.txt"))
+            try
             {
-                string fileContents = reader.ReadToEnd();
-                Console.WriteLine(fileContents);
+                using (StreamReader reader = new StreamReader(@"..\..\Data\HallOfFame.txt"))
+                {
+                    string fileContents = reader.ReadToEnd();
+                    Console.WriteLine(fileContents);
 
-            } 
+                }
+            }
+            catch (DirectoryNotFoundException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            catch (FileNotFoundException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            catch (FileLoadException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            catch (EndOfStreamException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
         }
 
         private void DrawInstructionsOption()
         {
-            using (StreamReader reader =  new StreamReader(@"..\..\Data\Instructions.txt"))
+            try
             {
-                string fileContents = reader.ReadToEnd();
-                Console.WriteLine(fileContents);
-               
+                using (StreamReader reader = new StreamReader(@"..\..\Data\Instructions.txt"))
+                {
+                    string fileContents = reader.ReadToEnd();
+                    Console.WriteLine(fileContents);
+
+                }
             }
+            catch (DirectoryNotFoundException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            catch (FileNotFoundException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            catch (FileLoadException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            catch (EndOfStreamException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+
         }
 
         private void DrawAboutOption()
         {
             using (StreamReader reader = new StreamReader(@"..\..\Data\About.txt"))
             {
-                string fileContents = reader.ReadToEnd();
-                Console.WriteLine(fileContents);
+                try
+                {
+                    string fileContents = reader.ReadToEnd();
+                    Console.WriteLine(fileContents);
+                }
+                catch (DirectoryNotFoundException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+                catch (FileNotFoundException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+                catch (FileLoadException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+                catch (EndOfStreamException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
 
             }
         }
