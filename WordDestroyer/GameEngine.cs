@@ -52,6 +52,7 @@
             Console.SetWindowSize(45, 45);
             Console.SetBufferSize(45, 45);
             Console.Write(string.Empty);
+            
         }
 
         private void StartNewGame()
@@ -59,6 +60,7 @@
             Console.Clear();
             ReadAllWords();
 
+       
             Thread thread = new Thread(() => this.DrawWords());
             thread.Start();
 
@@ -121,6 +123,9 @@
         {
             Stopwatch newGameStopwatch = new Stopwatch();
             newGameStopwatch.Start();
+            int livesCount = 3;
+            int playFieldWidth = 20;
+            Random randomGen = new Random();
 
             while (true)
             {
@@ -130,6 +135,7 @@
                     WordObject currentWord = wordsDictionary[randomLetter]
                         .Where(x => x.IsVisible == false && x.IsMissed == false && x.IsDestroyed == false)
                         .FirstOrDefault();
+                    
 
                     if (currentWord != null)
                     {
@@ -145,6 +151,7 @@
                         {
                             Point currentPoint = word.Element.CoordinatePoint;
                             currentPoint.Y += 1;
+                            currentPoint.X = randomGen.Next(0, playFieldWidth);
                             word.Element.CoordinatePoint = currentPoint;
                         }
                     }
@@ -163,12 +170,19 @@
                         }
                     }
                 }
+                PrintStringOnPosition(30, 10, "Lives:" + livesCount, ConsoleColor.White);
+                PrintStringOnPosition(30, 11, "Points:" , ConsoleColor.White);
 
                 Thread.Sleep(500);
                 this.visibleWords.Clear();
             }
         }
-
+        static void PrintStringOnPosition(int col, int row, string str, ConsoleColor color = ConsoleColor.Gray)
+        {
+            Console.SetCursorPosition(col, row);
+            Console.ForegroundColor = color;
+            Console.Write(str);
+        }
         private char GetRandomLetter()
         {
             if (!this.alphabetDictionary.ContainsValue(false))
