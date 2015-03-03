@@ -14,15 +14,12 @@ namespace WordDestroyerGame
     
     public class MainMenu : IDrawableObject 
     {
-        public readonly char optionSelector = '@';
-        public readonly string NewGameOption = "New Game";
-        public readonly string HallOfFameOption = "Hall of Fame";
-        public readonly string InstructionsOption = "Instructions";
-        public readonly string AboutOption = "About";
-        public readonly string ExitOption = "Exit";
-        public readonly string ReturnOption = "Return";
         private int selectedMainMenuLine = new int();
         private bool newGameStarted;
+        public readonly char optionSelector = '@';
+        public List<string> UserMenuList = new List<string>() { "New Game", "Hall of Fame", "Instructions", "About", "Exit" };
+        public Stopwatch AnimationStopwatch = new Stopwatch();
+        SpeechSynthesizer natashaVolkova = new SpeechSynthesizer();     //Not necessary, but cool. Natasha Volkova --> RA3 Sniper. Synth needs new name
 
         public bool NewGameStarted
         {
@@ -30,17 +27,11 @@ namespace WordDestroyerGame
             set { newGameStarted = value; }
         }
 
-        public List<string> UserMenuList = new List<string>() { "New Game", "Hall of Fame", "Instructions", "About", "Exit" };
-        public Stopwatch AnimationStopwatch = new Stopwatch();
-        SpeechSynthesizer natashaVolkova = new SpeechSynthesizer();     //Not necessary, but cool. Natasha Volkova --> RA3 Sniper. Synth needs new name
-
-        
-
         public void InteractionLoop()
         {
 
-            // TODO: This method should listen for key input (mouse up/down) and call another methods 
-            // TODO: This method should listen for key input (mouse up/down --> what do you mean mouse? ) and call another method 
+            // TODO: This method should listen for key input (arrow up/down) and call another methods 
+            // TODO: This method should listen for key input (arrow up/down) and call another method 
             // that should handle the interactions. For instance if the current selection is "Instructions" and the 
             // user hits "Enter" then we should read the instructions from "Instructions.txt" file and draw them on the Console. 
             // Don't forget to add "Return" option in order the user to turn back into the main menu.
@@ -109,7 +100,7 @@ namespace WordDestroyerGame
                             
                         }
 
-                        Draw();
+                        //this.Draw();
                         break;
 
                     default:
@@ -121,22 +112,19 @@ namespace WordDestroyerGame
             } while (userInputKey.Key != ConsoleKey.Escape);
         }
 
-        public void Draw()
+        public void Draw(Point point)
         {   
             AnimationStopwatch = new Stopwatch();
             // TODO: The name of the game should be drawn along with the main menu navigaiton options and selector.
-            string startMessage = "Welcome to the game/Placeholder";    //Needs to be moved elsewhere so it is only executed once
-            int y = Console.WindowHeight / 2;
-            int x = (Console.WindowWidth / 2) - (startMessage.Length / 2);        //Needs fine adjustments
-            Console.SetCursorPosition(x, y);
-            Console.Title = string.Empty;
+            string startMessage = string.Format("Welcome to the {0}!", Console.Title);    //Needs to be moved elsewhere so it is only executed once
+            Console.SetCursorPosition(point.X, point.Y);
             for (int i = 0; i < startMessage.Length; )
             {
                 AnimationStopwatch.Start();
                 //if (AnimationStopwatch.ElapsedMilliseconds == 100)  //Do not erase this line! Atleast not now
                 //{
                     Console.Write(startMessage[i]);
-                    Console.Title += startMessage[i];
+                    //Console.Title += startMessage[i];
                     i++;
                     AnimationStopwatch.Reset();
                     Thread.Sleep(50);
@@ -157,8 +145,10 @@ namespace WordDestroyerGame
             //        break;
             //    }
             //}
+            Thread.Sleep(1000);
             DrawMainMenu(selectedMainMenuLine);
         }
+
         private void DrawMainMenu(int selectedMainMenuLine)
         {
             Console.Clear();
@@ -173,6 +163,7 @@ namespace WordDestroyerGame
                 Console.Write(UserMenuList[i]);
             }
         }
+
         private void DrawSubMenu()
         {
             switch (selectedMainMenuLine)
@@ -225,11 +216,6 @@ namespace WordDestroyerGame
 
             }
             
-        }
-
-        public void Draw(Point point)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -13,8 +13,6 @@
         {
             GameEngine gameEngine = new GameEngine();
             gameEngine.StartGame();
-           
-            
         }
     }
 }

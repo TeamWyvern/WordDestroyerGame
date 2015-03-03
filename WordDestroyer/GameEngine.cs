@@ -21,7 +21,7 @@
             Console.Title = "Word Destroyer Game";
             Console.SetWindowSize(45, 45);
             Console.SetBufferSize(45, 45);
-            Console.ReadKey();
+            Console.Write(string.Empty);
         }
 
         private void GameMainLoop()
@@ -30,7 +30,7 @@
 
             while (true)
             {
-                mainMenu.Draw();
+                mainMenu.Draw(new Point(Console.WindowWidth / 8, Console.WindowHeight / 2));
                 mainMenu.InteractionLoop();
 
                 if (mainMenu.NewGameStarted == true)
