@@ -112,12 +112,12 @@ namespace WordDestroyerGame
             } while (userInputKey.Key != ConsoleKey.Escape);
         }
 
-        public void Draw(Point point)
+        public void Draw()
         {   
             AnimationStopwatch = new Stopwatch();
             // TODO: The name of the game should be drawn along with the main menu navigaiton options and selector.
             string startMessage = string.Format("Welcome to the {0}!", Console.Title);    //Needs to be moved elsewhere so it is only executed once
-            Console.SetCursorPosition(point.X, point.Y);
+            Console.SetCursorPosition(Console.WindowWidth / 8, Console.WindowHeight / 2);
             for (int i = 0; i < startMessage.Length; )
             {
                 AnimationStopwatch.Start();

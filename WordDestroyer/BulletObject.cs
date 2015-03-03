@@ -15,7 +15,7 @@
             this.Element.Text = text;
         }
 
-        public void Draw(Point point)
+        public void Draw()
         {
             throw new NotImplementedException();
         }

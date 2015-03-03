@@ -9,6 +9,6 @@
 
     interface IDrawableObject
     {
-        void Draw(Point point);
+        void Draw();
     }
 }
