@@ -66,7 +66,12 @@
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
 
-                if (this.IsWordSelected)
+                if (!Char.IsLetter(key.KeyChar))
+                {
+                    continue;
+                }
+
+                if (this.IsWordSelected && this.SelectedWord.IsVisible)
                 {
                     if (this.SelectedWord.Element.Text[0] == key.KeyChar)
                     {
@@ -164,7 +169,7 @@
                     }
                 }
 
-                Thread.Sleep(500);
+                Thread.Sleep(250);
                 this.visibleWords.Clear();
             }
         }
