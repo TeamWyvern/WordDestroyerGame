@@ -54,8 +54,8 @@
         {
             Console.CursorVisible = false;
             Console.Title = "Word Destroyer Game";
-            Console.SetWindowSize(45, 45);
-            Console.SetBufferSize(45, 45);
+            Console.SetWindowSize(48, 45);
+            Console.SetBufferSize(48, 45);
             Console.Write(string.Empty);
 
         }
@@ -74,6 +74,12 @@
             while (true)
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
+
+                // termination durring the game
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    this.LivesCount = 0;
+                }
 
                 if (!Char.IsLetter(key.KeyChar))
                 {
@@ -216,13 +222,18 @@
                 {
                     PrintStringOnPosition(30, i, "|", ConsoleColor.Green);
                 }
-                PrintStringOnPosition(32, 10, "Lives: " + this.LivesCount, ConsoleColor.Green);
-                PrintStringOnPosition(32, 11, "Points: " + this.Score, ConsoleColor.Green);
+                PrintStringOnPosition(32, 10, "Lives: " + this.LivesCount, ConsoleColor.Green); //fix here 30->32
+                PrintStringOnPosition(32, 11, "Points: " + this.Score, ConsoleColor.Green);     //fix here 30->32
                 if (this.LivesCount == 0)
                 {
+                    Console.Clear();
+                    CheckHighScore(this.Score); //add to HallOfFame
+                    
                     PrintStringOnPosition(10, 10, "Game over", ConsoleColor.Red);
                     PrintStringOnPosition(10, 11, "Press ENTER to exit", ConsoleColor.Red);
+                    PrintStringOnPosition(10, 12, "Points: " + this.Score, ConsoleColor.Red);
                     Console.WriteLine();
+                    
                     Environment.Exit(0);
                 }
 
@@ -272,5 +283,78 @@
                 }
             }
         }
+
+        private void CheckHighScore(long score)
+        {
+            //reading HallOfFame
+            StreamReader linesReader = new StreamReader(@"..\..\Data\HallOfFame.txt");
+            string[] lines = new string[12];
+
+            for (int i = 0; i < 12; i++)
+            {
+                lines[i]=linesReader.ReadLine();
+            }
+            linesReader.Close();
+
+            long[] scores = new long[11];
+            //convert to results
+            for (int i = 0; i < 10; i++)
+			{
+			    string tempScore = lines[i+2].Substring(4);
+                
+                if (tempScore=="-Empty-")
+	            {
+		            scores[i]=0;
+	            }
+                else
+	            {
+                    scores[i]=long.Parse(tempScore);
+	            }
+			}
+            scores[10]=score;
+            Array.Sort(scores);
+            Array.Reverse(scores);
+            //new high scores created
+
+            //cheking for new entries
+            if (scores[0]==score)
+            {
+                PrintStringOnPosition(10, 8, "NEW RECORD!", ConsoleColor.Red);
+            }
+            for (int i = 1; i < 10; i++)
+            {
+                if (scores[i]==score)
+                {
+                    PrintStringOnPosition(10, 8, "NEW HIGH SCORE!", ConsoleColor.Red);
+                }
+            }
+
+            //rewrithing HallOfFame
+            string[] newSubLines = new string[10];
+            for (int i = 0; i < 10; i++)
+			{
+			    if (scores[i]==0)
+	            {
+		            newSubLines[i]="-Empty-";
+	            }
+                else 
+                {
+                    newSubLines[i]= scores[i].ToString();
+                }
+			}
+
+            for (int i = 0; i < 10; i++)
+			{
+			lines[i+2]= String.Format("{0,2}. {1}", i+1, newSubLines[i]);
+			}
+
+            StreamWriter streamWriter = new StreamWriter(@"..\..\Data\HallOfFame.txt");
+            for (int i = 0; i < 12; i++)
+			{
+			    streamWriter.WriteLine(lines[i]);
+			}
+            streamWriter.Close();
+        }
+        
     }
 }
