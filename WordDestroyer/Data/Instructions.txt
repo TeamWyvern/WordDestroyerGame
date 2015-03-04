@@ -1,3 +1,12 @@
-                                                   Instructions
-There are words, falling down and you must shoot them with the ship in order to destroy them. To do that, you need to type the words right using your keyboard. On the screen, there is a section in which you can see what you are typing. You can let only 3 words fall down. If you let more than 3 words fall down the game is over!
+                Instructions
+---------------------------------------------
+There are words, falling down and you must 
+shoot them with the ship in order to destroy
+them. To do that, you need to type the words
+right using your keyboard. On the screen, 
+there is a section in which you can see 
+what you are typing. 
+You can let only 3 words fall down. 
+If you let more than 3 words fall down the 
+game is over!
  

@@ -211,8 +211,13 @@
                     }
                 }
 
-                PrintStringOnPosition(30, 10, "Lives: " + this.LivesCount, ConsoleColor.Green);
-                PrintStringOnPosition(30, 11, "Points: " + this.Score, ConsoleColor.Green);
+                //separation line
+                for (int i = 0; i < 45; i++)
+                {
+                    PrintStringOnPosition(30, i, "|", ConsoleColor.Green);
+                }
+                PrintStringOnPosition(32, 10, "Lives: " + this.LivesCount, ConsoleColor.Green);
+                PrintStringOnPosition(32, 11, "Points: " + this.Score, ConsoleColor.Green);
                 if (this.LivesCount == 0)
                 {
                     PrintStringOnPosition(10, 10, "Game over", ConsoleColor.Red);

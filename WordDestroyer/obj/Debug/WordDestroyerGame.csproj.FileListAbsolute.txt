@@ -10,3 +10,9 @@ C:\Users\dimit_000\Desktop\WordDestroyerGame-master\WordDestroyer\obj\Debug\Bric
 C:\Users\dimit_000\Desktop\WordDestroyerGame-master\WordDestroyer\obj\Debug\WordDestroyerGame.csprojResolveAssemblyReference.cache
 C:\Users\dimit_000\Desktop\WordDestroyerGame-master\WordDestroyer\bin\Debug\Brickdestroyer.exe
 C:\Users\dimit_000\Desktop\WordDestroyerGame-master\WordDestroyer\bin\Debug\Brickdestroyer.pdb
+C:\Users\Lero\Documents\GitHub\WordDestroyerGame\WordDestroyer\bin\Debug\Brickdestroyer.exe.config
+C:\Users\Lero\Documents\GitHub\WordDestroyerGame\WordDestroyer\obj\Debug\Brickdestroyer.exe
+C:\Users\Lero\Documents\GitHub\WordDestroyerGame\WordDestroyer\obj\Debug\Brickdestroyer.pdb
+C:\Users\Lero\Documents\GitHub\WordDestroyerGame\WordDestroyer\bin\Debug\Brickdestroyer.exe
+C:\Users\Lero\Documents\GitHub\WordDestroyerGame\WordDestroyer\bin\Debug\Brickdestroyer.pdb
+C:\Users\Lero\Documents\GitHub\WordDestroyerGame\WordDestroyer\obj\Debug\WordDestroyerGame.csprojResolveAssemblyReference.cache
