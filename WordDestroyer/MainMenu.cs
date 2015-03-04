@@ -16,11 +16,11 @@ namespace WordDestroyerGame
     {
         private int selectedMainMenuLine = new int();
         private bool newGameStarted;
-<<<<<<< HEAD
+
         public readonly char optionSelector = '>';
         public List<string> UserMenuList = new List<string>() { " New Game", " High Scores", " Instructions", " About", " Exit" };
 
->>>>>>> origin/master
+
         public Stopwatch AnimationStopwatch = new Stopwatch();
         SpeechSynthesizer natashaVolkova = new SpeechSynthesizer();     //Not necessary, but cool. Natasha Volkova --> RA3 Sniper. Synth needs new name
 

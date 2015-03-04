@@ -301,6 +301,7 @@
             {
                 Console.WriteLine(exception.Message);
             }
+
         }
 
         private void CheckHighScore(long score)
@@ -373,6 +374,7 @@
 			    streamWriter.WriteLine(lines[i]);
 			}
             streamWriter.Close();
+
         }
         
     }
