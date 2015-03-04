@@ -163,6 +163,12 @@
 
         private void DrawWords()
         {
+            //separation line
+            for (int i = 0; i < 45; i++)
+            {
+                PrintStringOnPosition(30, i, "|", ConsoleColor.Green);
+            }
+
             Stopwatch newGameStopwatch = new Stopwatch();
             newGameStopwatch.Start();
             
@@ -180,7 +186,7 @@
                         currentWord.IsVisible = true;
                     }
                 }
-
+                
                 foreach (var currentWordCollection in wordsDictionary.ToArray())
                 {
                     foreach (var word in currentWordCollection.Value)
@@ -197,11 +203,18 @@
                             if (currentPoint.Y == 45)
                             {
                                 this.LivesCount--;
-
+                                //here clears words fallen
+                                Console.SetCursorPosition(0, 44);
+                                Console.Write(new string(' ', 29));
+                                Console.SetCursorPosition(0, 0);
+                                SpaceshipObject spaceship = new SpaceshipObject(new Point(12, 39));
+                                spaceship.Draw();
+                                
                             }
                         }
                     }
                 }
+                
       
                 //Console.Clear();
 
@@ -217,11 +230,8 @@
                     }
                 }
 
-                //separation line
-                for (int i = 0; i < 45; i++)
-                {
-                    PrintStringOnPosition(30, i, "|", ConsoleColor.Green);
-                }
+                
+                
                 PrintStringOnPosition(32, 10, "Lives: " + this.LivesCount, ConsoleColor.Green); //fix here 30->32
                 PrintStringOnPosition(32, 11, "Points: " + this.Score, ConsoleColor.Green);     //fix here 30->32
                 if (this.LivesCount == 0)

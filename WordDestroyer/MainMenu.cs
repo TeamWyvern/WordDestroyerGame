@@ -53,7 +53,7 @@ namespace WordDestroyerGame
                 {
                     case ConsoleKey.DownArrow:  //Which keys will we be waiting for?
                         Console.Clear();
-                        if (selectedMainMenuLine == UserMenuList.Length-1)
+                        if (selectedMainMenuLine == UserMenuList.Count-1)
                         {
                             selectedMainMenuLine = -1;
                         }
@@ -64,7 +64,7 @@ namespace WordDestroyerGame
                         Console.Clear();
                         if (selectedMainMenuLine == 0)
                         {
-                            selectedMainMenuLine = UserMenuList.Length;
+                            selectedMainMenuLine = UserMenuList.Count;
                         }
                         selectedMainMenuLine -= 1;
                         DrawMainMenu(selectedMainMenuLine);
@@ -156,7 +156,7 @@ namespace WordDestroyerGame
         {
             Console.Clear();
             
-            for (int i = 0; i < UserMenuList.Length; i++)
+            for (int i = 0; i < UserMenuList.Count; i++)
             {
                 Console.SetCursorPosition(Console.WindowWidth / 2 - 8, Console.WindowHeight / 2 + i);
                 if (i==selectedMainMenuLine)

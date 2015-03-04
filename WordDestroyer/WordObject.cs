@@ -10,6 +10,10 @@
 
     public class WordObject : GameObjectBase, IDrawableObject
     {
+        public WordObject() 
+        {
+        }
+
         public WordObject(string text, Point coordinatePoint)
         {
             this.Element = new UIElement(coordinatePoint);
