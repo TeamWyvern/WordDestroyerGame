@@ -269,18 +269,37 @@
 
         private void ReadAllWords()
         {
-            string currentWord = null;
-            StreamReader wordsReader = new StreamReader(@"..\..\Data\SomeWords.txt");
-
-            using (wordsReader)
+            try
             {
-                while ((currentWord = wordsReader.ReadLine()) != null)
+                string currentWord = null;
+                StreamReader wordsReader = new StreamReader(@"..\..\Data\SomeWords.txt");
+
+                using (wordsReader)
                 {
-                    if (wordsDictionary.ContainsKey(currentWord[0]))
+                    while ((currentWord = wordsReader.ReadLine()) != null)
                     {
-                        wordsDictionary[currentWord[0]].Add(new WordObject(currentWord.Trim(), new Point(Console.WindowWidth / 2, 0)));
+                        if (wordsDictionary.ContainsKey(currentWord[0]))
+                        {
+                            wordsDictionary[currentWord[0]].Add(new WordObject(currentWord.Trim(), new Point(Console.WindowWidth / 2, 0)));
+                        }
                     }
                 }
+            }
+            catch (DirectoryNotFoundException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            catch (FileNotFoundException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            catch (FileLoadException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            catch (EndOfStreamException exception)
+            {
+                Console.WriteLine(exception.Message);
             }
         }
 
